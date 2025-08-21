@@ -1,1 +1,147 @@
-<PUT_THE_UPDATED_CODE_FROM_TEXTDOC_HERE>
+import { useState } from "react";
+import { Input } from "./components/ui/input";
+import { Badge } from "./components/ui/badge";
+
+const tweets = [
+  {
+    id: "001",
+    text: "I no longer have a manager. I can’t be managed.",
+    date: "2018-04-25",
+    tags: ["freedom", "ego", "business"]
+  },
+  {
+    id: "002",
+    text: "Slavery was a choice.",
+    date: "2018-05-01",
+    tags: ["controversy", "history"]
+  },
+  {
+    id: "003",
+    text: "I’m nice at ping pong.",
+    date: "2018-04-18",
+    tags: ["funny", "sports"]
+  },
+  {
+    id: "004",
+    text: "I love sleep it’s my favorite.",
+    date: "2010-02-08",
+    tags: ["funny", "relatable"]
+  },
+  {
+    id: "005",
+    text: "Sometimes you have to get rid of everything.",
+    date: "2016-06-02",
+    tags: ["minimalism", "life"]
+  },
+  {
+    id: "006",
+    text: "2024 is my year.",
+    date: "2023-12-31",
+    tags: ["future", "announcement"]
+  },
+  {
+    id: "007",
+    text: "I am Warhol. I am the number one most impactful artist of our generation.",
+    date: "2015-11-10",
+    tags: ["ego", "art"]
+  },
+  {
+    id: "008",
+    text: "Sometimes I get emotional over fonts.",
+    date: "2013-01-22",
+    tags: ["design", "funny"]
+  },
+  {
+    id: "009",
+    text: "Fur pillows are hard to actually sleep on.",
+    date: "2012-05-14",
+    tags: ["funny", "random"]
+  },
+  {
+    id: "010",
+    text: "My greatest pain in life is that I will never be able to see myself perform live.",
+    date: "2011-10-04",
+    tags: ["ego", "performance"]
+  }
+];
+
+export default function KanyeTweetArchive() {
+  const [query, setQuery] = useState("");
+  const [tagFilter, setTagFilter] = useState("");
+
+  const filteredTweets = tweets
+    .filter((tweet) => {
+      const matchesQuery = tweet.text.toLowerCase().includes(query.toLowerCase());
+      const matchesTag = tagFilter ? tweet.tags.includes(tagFilter) : true;
+      return matchesQuery && matchesTag;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  const allTags = Array.from(new Set(tweets.flatMap((tweet) => tweet.tags))).sort();
+
+  return (
+    <div className="min-h-screen bg-[#f7f9f9] text-black p-4 max-w-2xl mx-auto font-sans">
+      <h1 className="text-2xl font-bold mb-6 text-center">Kanye Tweet Archive</h1>
+
+      <Input
+        placeholder="Search tweets..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="mb-4 border border-gray-300 rounded-full px-4 py-2"
+      />
+
+      {tagFilter && (
+        <div className="mb-2">
+          <span className="text-sm">Filtering by tag: </span>
+          <Badge className="cursor-pointer" onClick={() => setTagFilter("")}>{tagFilter}</Badge>
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2 mb-6">
+        {allTags.map((tag) => (
+          <Badge
+            key={tag}
+            className={`cursor-pointer ${tagFilter === tag ? 'bg-blue-500 text-white' : ''}`}
+            onClick={() => setTagFilter(tag)}
+          >
+            #{tag}
+          </Badge>
+        ))}
+      </div>
+
+      <div className="space-y-4">
+        {filteredTweets.map((tweet) => (
+          <div
+            key={tweet.id}
+            className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition"
+          >
+            <div className="flex items-start gap-3 mb-2">
+              <img
+                src="/kanye-avatar.jpg"
+                alt="avatar"
+                className="w-10 h-10 rounded-full"
+              />
+              <div>
+                <div className="font-bold leading-tight">
+                  ye <span className="text-gray-500 font-normal">@kanyewest · {tweet.date}</span>
+                </div>
+                <p className="text-[15px] mt-1 whitespace-pre-wrap leading-snug">{tweet.text}</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {tweet.tags.map((tag) => (
+                <Badge
+                  key={tag}
+                  className="cursor-pointer"
+                  onClick={() => setTagFilter(tag)}
+                >
+                  #{tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
