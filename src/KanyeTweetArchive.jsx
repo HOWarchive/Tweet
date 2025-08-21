@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Input } from "./components/ui/input";
 import { Badge } from "./components/ui/badge";
@@ -8,60 +9,6 @@ const tweets = [
     text: "I no longer have a manager. I can’t be managed.",
     date: "2018-04-25",
     tags: ["freedom", "ego", "business"]
-  },
-  {
-    id: "002",
-    text: "Slavery was a choice.",
-    date: "2018-05-01",
-    tags: ["controversy", "history"]
-  },
-  {
-    id: "003",
-    text: "I’m nice at ping pong.",
-    date: "2018-04-18",
-    tags: ["funny", "sports"]
-  },
-  {
-    id: "004",
-    text: "I love sleep it’s my favorite.",
-    date: "2010-02-08",
-    tags: ["funny", "relatable"]
-  },
-  {
-    id: "005",
-    text: "Sometimes you have to get rid of everything.",
-    date: "2016-06-02",
-    tags: ["minimalism", "life"]
-  },
-  {
-    id: "006",
-    text: "2024 is my year.",
-    date: "2023-12-31",
-    tags: ["future", "announcement"]
-  },
-  {
-    id: "007",
-    text: "I am Warhol. I am the number one most impactful artist of our generation.",
-    date: "2015-11-10",
-    tags: ["ego", "art"]
-  },
-  {
-    id: "008",
-    text: "Sometimes I get emotional over fonts.",
-    date: "2013-01-22",
-    tags: ["design", "funny"]
-  },
-  {
-    id: "009",
-    text: "Fur pillows are hard to actually sleep on.",
-    date: "2012-05-14",
-    tags: ["funny", "random"]
-  },
-  {
-    id: "010",
-    text: "My greatest pain in life is that I will never be able to see myself perform live.",
-    date: "2011-10-04",
-    tags: ["ego", "performance"]
   }
 ];
 
@@ -89,13 +36,6 @@ export default function KanyeTweetArchive() {
         onChange={(e) => setQuery(e.target.value)}
         className="mb-4 border border-gray-300 rounded-full px-4 py-2"
       />
-
-      {tagFilter && (
-        <div className="mb-2">
-          <span className="text-sm">Filtering by tag: </span>
-          <Badge className="cursor-pointer" onClick={() => setTagFilter("")}>{tagFilter}</Badge>
-        </div>
-      )}
 
       <div className="flex flex-wrap gap-2 mb-6">
         {allTags.map((tag) => (
